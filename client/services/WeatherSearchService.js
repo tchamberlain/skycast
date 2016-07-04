@@ -5,6 +5,7 @@ angular.module('WeatherSearchService',[])
 
     return ({
       getWeatherData: getWeatherData,
+      getPlaceData: getPlaceData,
     });
 
     function getWeatherData() {
@@ -15,8 +16,22 @@ angular.module('WeatherSearchService',[])
       })
       // handle error
       .error(function (data) {
-        user = false;
+       console.error(data);
       });
     }
+
+    function getPlaceData(place) {
+      return $http.post('/placeData',
+        {place: place})
+      // handle success
+      .success(function (data) {
+        console.log('wat data we recieve??',data);
+      })
+      // handle error
+      .error(function (data) {
+        console.error(data);
+      });
+    }
+
 
 }]);

@@ -1,5 +1,13 @@
 <h1>Weather!</h1>
-
+<input type="text" ng-model="place" ng-change="searchPlace(place)" placeholder="Search for a place">
+  <ul>
+    <ul ng-repeat="place in placePredictions" ng-click="">
+        <div class="media-details">
+          {{song.name}}, <span class='artist'>{{song.artists[0].name}}</span>
+        </div>
+      </a>
+    </ul>
+  </ul>
 <div ng-controller="logoutController">
   <a ng-click='logout()' class="btn btn-default">Logout</a>
 </div>

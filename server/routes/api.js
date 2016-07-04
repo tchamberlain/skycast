@@ -5,6 +5,8 @@ var User = require('../models/user.js');
 var request = require('request');
 var darkskyKey = require("../config").darkskyKey;
 var GooglePlaces = require('google-places');
+var places = new GooglePlaces(require("../config").googlePlacesKey);
+
 
 router.post('/user/register', function(req, res) {
   User.register(new User({ username: req.body.username }),
@@ -63,14 +65,26 @@ router.get('/user/status', function(req, res) {
   });
 });
 
-router.get('/placeInfo', function(req, res) {
-  if (!req.isAuthenticated()) {
-    return res.status(200).json({
-      status: false
-    });
-  }
-  res.status(200).json({
-    status: true
+router.post('/placeData', function(req, res) {
+  places.autocomplete({ input: req.body.place }, function(err, response) {
+    if( err ){
+     return res.status(500).json({
+       err: err
+     });
+    } 
+    res.json(response.predictions);
+    
+    // var success = function(err, response) {
+    //   console.log("did you mean: ", response.result.name);
+    //   // did you mean:  Vermont
+    //   // did you mean:  Vermont South
+    //   // did you mean:  Vermilion
+    //   // did you mean:  Vermillion
+    // };
+
+    // for(var index in response.predictions) {
+    //   places.details({reference: response.predictions[index].reference}, success);
+    // }
   });
 });
 
@@ -87,7 +101,6 @@ router.get('/weatherData', function(req, res) {
      //daily
     // console.log('response-- url???',forecastData.currently);
     res.json(forecastData.daily);
-    console.log('response-- url???',forecastData.daily);
   });
 });
 
