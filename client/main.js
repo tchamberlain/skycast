@@ -1,9 +1,14 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp',[
+  'ngRoute',
+  'WeatherCtrl',
+  'PastSearchesCtrl',
+  ]);
 
 myApp.config(function ($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'views/weather.html',
+      controller: 'weatherController',
       access: {restricted: true}
     })
     .when('/login', {
@@ -17,6 +22,7 @@ myApp.config(function ($routeProvider) {
     })
     .when('/pastSearches', {
       templateUrl: 'views/pastSearches.html',
+      controller: 'pastSearchesController',
       access: {restricted: true}
     })
     .otherwise({
