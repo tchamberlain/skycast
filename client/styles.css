@@ -3,13 +3,11 @@ body {
     background-size: 100vw 100vh;
 
 }
-h1{
-  color: white;
-}
 
 .whiteContainer{
   margin: auto;
-  width: 80%;
+  width: 100%;
+  padding: 10px;
   background-color:white;
   padding: 10px;
   overflow:overlay;
@@ -17,6 +15,14 @@ h1{
 }
 
 .center {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+    overflow:overlay;
+    border-radius: 15px;
+}
+
+.whiteBorder {
     margin: auto;
     width: 80%;
     border: 3px solid white;

@@ -1,16 +1,22 @@
-<h1>Weather!</h1>
-<input type="text" ng-model="place" ng-change="searchPlace(place)" placeholder="Search for a place">
-  <ul>
-    <ul ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
-        <div class="media-details">
-          {{place.terms[0].value}}
-        </div>
-    </ul>
-  </ul>
+ <div class='whiteContainer'> 
+  <h1>Weather!</h1>
 
- <div class='whiteContainer'> {{weatherCurrently}} </div>
- <div class='whiteContainer'> {{weatherForecast}} </div>
- <div class='whiteContainer'> {{weatherHistory}} </div>
+    <input type="text"   class="search" ng-model="place" ng-change="searchPlace(place)" placeholder="Search for a place">
+      <ul>
+        <ul ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
+            <div class="media-details">
+              {{place.terms[0].value}}
+            </div>
+        </ul>
+      </ul>
+
+      <h2>Current Weather</h2>
+     <div>  {{weatherCurrently}} </div>
+     <h2>This Week's Forecast</h2>
+     <div> {{weatherForecast}} </div>
+     <h2>Weather History</h2>
+     <div> {{weatherHistory}} </div>
+  <div>
 
 <div ng-controller="logoutController">
   <a ng-click='logout()' class="btn btn-default">Logout</a>
