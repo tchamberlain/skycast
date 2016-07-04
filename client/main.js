@@ -2,6 +2,7 @@ var myApp = angular.module('myApp',[
   'ngRoute',
   'WeatherCtrl',
   'PastSearchesCtrl',
+  'WeatherSearchService'
   ]);
 
 myApp.config(function ($routeProvider) {
