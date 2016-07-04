@@ -20,7 +20,8 @@ myApp.config(function ($routeProvider) {
       access: {restricted: true}
     })
     .otherwise({
-      redirectTo: '/'
+      redirectTo: '/',
+      access: {restricted: true}
     });
 });
 
