@@ -4,6 +4,7 @@ var passport = require('passport');
 var User = require('../models/user.js');
 var request = require('request');
 var darkskyKey = require("../config").darkskyKey;
+var GooglePlaces = require('google-places');
 
 router.post('/user/register', function(req, res) {
   User.register(new User({ username: req.body.username }),
@@ -52,6 +53,17 @@ router.get('/user/logout', function(req, res) {
 });
 
 router.get('/user/status', function(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.status(200).json({
+      status: false
+    });
+  }
+  res.status(200).json({
+    status: true
+  });
+});
+
+router.get('/placeInfo', function(req, res) {
   if (!req.isAuthenticated()) {
     return res.status(200).json({
       status: false
