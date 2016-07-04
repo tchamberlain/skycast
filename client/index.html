@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="myApp">
+
+<head>
+  <meta charset="utf-8">
+  <title>SkyCast</title>
+  <!-- STYLES -->
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css" rel="stylesheet">
+  <link href="./styles.css" rel="stylesheet">
+
+</head>
+<body>
+   <div class= 'navContainer'>
+    <nav class="navbar navbar-light bg-faded ">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <img src="http://megaicons.net/static/img/icons_sizes/8/178/256/weather-partly-cloudy-day-icon.png" style="width:55px;height:48px;">
+          <a class="navbar-brand" href="#">SkyCast</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li id="navItem"><a href="#">Search the Weather</a></li>
+          <li id="navItem"><a href="#">Past Searches</a></li> 
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="center">
+    <div  ng-view></div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-route.min.js"></script>
+  <script src="./main.js"></script>
+  <script src="./services/AuthService.js"></script>
+  <script src="./controllers/LoginCtrl.js"></script>
+  <script src="./controllers/PastSearchesCtrl.js"></script>
+  <script src="./controllers/WeatherCtrl.js"></script>
+</body>
+</html>
