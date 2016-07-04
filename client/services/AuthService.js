@@ -1,6 +1,6 @@
 angular.module('myApp').factory('AuthService',
-  ['$q', '$timeout', '$http',
-  function ($q, $timeout, $http) {
+  ['$q', '$http',
+  function ($q, $http) {
 
     // create user variable
     var user = null;

@@ -67,42 +67,58 @@ router.get('/user/status', function(req, res) {
 
 router.post('/placeData', function(req, res) {
   places.autocomplete({ input: req.body.place }, function(err, response) {
+    
     if( err ){
      return res.status(500).json({
        err: err
      });
     } 
-    res.json(response.predictions);
+    return res.json( response.predictions );
+
+    // for(var i=0; i < response.predictions.length; i++){
+    //   console.log('value3',response.predictions[i].terms[0].value);
+    // }    
     
     // var success = function(err, response) {
-    //   console.log("did you mean: ", response.result.name);
-    //   // did you mean:  Vermont
-    //   // did you mean:  Vermont South
-    //   // did you mean:  Vermilion
-    //   // did you mean:  Vermillion
+    //   var lat = response.result.geometry.location.lat;
+    //   var lng = response.result.geometry.location.lng;
+    //   console.log("lat,lng ",lat,lng);
     // };
-
-    // for(var index in response.predictions) {
-    //   places.details({reference: response.predictions[index].reference}, success);
-    // }
+    function success(err, response) {
+      console.log('NAME:',response.result.name);
+    };
+    for(var index in response.predictions) {
+      places.details({reference: response.predictions[index].reference}, success);
+    }
   });
 });
 
-router.get('/weatherData', function(req, res) {
-    var url = 'https://api.forecast.io/forecast/'+darkskyKey+'/42.7243,-73.6927';
-  request(url, function (error, response, body) {
-    // if (!error && response.statusCode == 200) {
-    //   var test = JSON.parse(body);   
-    //   console.log(test); 
-    // } else {
-    //   console.error(error);
-    // }
-     var forecastData = JSON.parse(body);
-     //daily
-    // console.log('response-- url???',forecastData.currently);
-    res.json(forecastData.daily);
-  });
+
+router.post('/weather/currently', function(req, res) {
+  
+  places.details({reference: req.body.place.reference}, callForecastApi);
+  
+  function callForecastApi(err, response){
+    if(err){
+      return res.status(500).json({
+        err: err
+      }); 
+    }
+    var lat = response.result.geometry.location.lat;
+    var lng = response.result.geometry.location.lng;
+    var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
+    request(url, function (error, response, body) {
+      if(err){
+        return res.status(500).json({
+          err: err
+        }); 
+      }
+      var forecastData = JSON.parse(body);
+      res.json(forecastData);
+    });
+  }
 });
+
 
 
 module.exports = router;

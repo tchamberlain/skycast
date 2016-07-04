@@ -4,16 +4,22 @@ angular.module('WeatherSearchService',[])
   function ($http) {
 
     return ({
-      getWeatherData: getWeatherData,
+      getWeatherCurrently: getWeatherCurrently,
       getPlaceData: getPlaceData,
     });
 
-    function getWeatherData() {
-      return $http.get('/weatherData')
-      // handle success
-      .success(function (data) {
-        console.log('wat data we recieve??',data);
-      })
+    function getWeatherCurrently(place) {
+      return $http.post('/weather/currently',
+        { place: place })
+      // handle error
+      .error(function (data) {
+       console.error(data);
+      });
+    }
+
+    function getWeatherHistory(place) {
+      return $http.post('/weather/history',
+        { place: place })
       // handle error
       .error(function (data) {
        console.error(data);
@@ -22,11 +28,11 @@ angular.module('WeatherSearchService',[])
 
     function getPlaceData(place) {
       return $http.post('/placeData',
-        {place: place})
+        { place: place })
       // handle success
-      .success(function (data) {
-        console.log('wat data we recieve??',data);
-      })
+      // .success(function (resp) {
+      //   return resp.data;
+      // })
       // handle error
       .error(function (data) {
         console.error(data);
