@@ -1,5 +1,9 @@
-<ul><h3>{{weather.day}}</h3></ul>
-<ul><skycon icon="weather.icon" size="50"></skycon></ul>
-<ul><div class='summaryText'>{{weather.summary}}</div> </ul>
-<ul> <span class='label label-default'>High of:</span> {{weather.temperatureMin}} °F</ul>
-<ul> <span class='label label-default'>Low of:</span> {{weather.temperatureMax}} °F</ul>
+<div class= 'panel panel-default'>
+  <ul class="panel-heading"><h5>{{weather.day}}</h5></ul> 
+  <div class='panel-content'>
+    <ul><skycon icon="weather.icon" size="50"></skycon></ul>
+    <ul><div class='summaryText'>{{weather.summary}}</div> </ul>
+    <ul> <span class='label label-default'>High of:</span> {{weather.temperatureMin}} °F</ul>
+    <ul> <span class='label label-default'>Low of:</span> {{weather.temperatureMax}} °F</ul>
+  </div>
+</div>

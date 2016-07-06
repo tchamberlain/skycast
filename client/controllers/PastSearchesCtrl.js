@@ -6,8 +6,10 @@ angular.module('PastSearchesCtrl',[])
     var getPastSearches = function(){
       WeatherSearchService.getPastSearches()
       .then(function(resp){
-        console.log(resp.data)
         $scope.pastSearches = resp.data.pastSearches;
+        if( $scope.pastSearches.length === 0 ){
+          $scope.noSearches = true;
+        }
         $scope.username = resp.data.username;
       });      
     }

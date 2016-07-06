@@ -3,6 +3,10 @@ body {
     background-size: 100vw 100vh;
 }
 
+#centered{
+  margin: auto;
+}
+
 h2{
   color:  #008cba;
 }
@@ -15,41 +19,41 @@ h2{
   overflow:overlay;
   margin-bottom: 2vw;
   border-radius: 15px;
+  margin: auto;
+  margin-bottom: 2vh;
+  width: 90%;
 }
+
+.signup{
+  width: 60%;
+}
+
 .navbar-brand:hover{
   color:#FFF;
 }
 
-.a{
-  color:#FFF   !important;
-}
-
-#navItem:hover{
+#navItem:hover .selected{
   color:black;
-  background-color:E2E2E2; 
+  background-color:#FFF; 
 }
 .summaryText{
   color: #008cba;
-  font-size: 1.2 em;
-  word-wrap: break-word;
-    word-break: break-all;
-  word-wrap: break-word;
-}
-div{
-      word-break: break-all;
-  word-wrap: break-word;
+  font-size: 1 em;
 }
 
 .forecastBlocks{
   font-size: .7 em;
-  margin-left: 2vw;
-  margin-right: 2vw;
-        word-break: break-all;
+  word-break: break-all;
   word-wrap: break-word;
 }
 
 .hoverme:hover{
   background-color:#E2E2E2;
+}
+
+.centerElement {
+  text-align: center;
+   display:inline-block;
 }
 
 .center {
@@ -84,7 +88,6 @@ nav {
 }
 
 #navItem{
-  color:  #333;
   margin-top: 2vh;
   margin-left: 1vw;
   color:  white;
@@ -149,3 +152,4 @@ nav {
   background: #666;
   color: #fff;
 }
+

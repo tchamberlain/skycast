@@ -1,5 +1,4 @@
  <div class='container-fluid'> 
-
     <div class='whiteContainer autoCompleteContainer'>
       <h2>Search a place to see the weather:</h2>
         <div class='autocomplete'>
@@ -13,20 +12,19 @@
           <div class="loading-spiner-holder" data-loading ><div class="loading-spiner"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" /></div></div>
       </div>
       
-      <div ng-show='weatherCurrently' class='whiteContainer'>
-      <h2>Current conditions for {{placeEntry}}</h2>
-        <ul><skycon icon="weatherCurrently.icon" size="100"></skycon></ul>
+      <div ng-show='weatherCurrently'class='whiteContainer text-center'>
+        <h2>Current conditions for: <a class="label label-primary"> {{placeEntry}}</a></h2>
+        <ul><skycon icon="weatherCurrently.icon" size="200"></skycon></ul>
         <ul><div class='summaryText'>{{weatherCurrently.summary}}</div> </ul>
         <ul> <span class='label label-default'>Probability of Precipitation:</span> {{weatherCurrently.precipProbability}} %</ul>
         <ul> <span class='label label-default'>Temperature:</span> {{weatherCurrently.temperature}} °F</ul>
         <ul> <span class='label label-default'>Feels Like:</span> {{weatherCurrently.apparentTemperature}} °F</u>
       </div>
 
-       <ul ng-show='weatherForecast' class="list-inline whiteContainer scroll row">
-
+       <ul ng-show='weatherForecast' class="whiteContainer">
          <h2>This Week's Forecast</h2>
-           <div ng-repeat="weather in weatherForecast">
-             <div><weather-block weather ="weather" class='col-md-2 forecastBlocks'></weather-block ></div>
+           <div class="list-inline" ng-repeat="weather in weatherForecast">
+             <weather-block weather ="weather" class='col-md-3 forecastBlocks'></weather-block>
            </div>
          </div>
         </ul>

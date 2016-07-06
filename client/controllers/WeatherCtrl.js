@@ -2,12 +2,10 @@ angular.module('WeatherCtrl',[])
 .controller('weatherController',['$scope','WeatherSearchService','$timeout',
   function ( $scope, WeatherSearchService, $timeout, $q ) {
    
-    // When routing from pastSearches, there will already be a search
     $scope.searchPlace = function( placeEntry ){
       // use service to generate google places autocomplete predictions
       WeatherSearchService.getPlaceData( placeEntry )
       .then(function(resp){
-        console.log(resp.data);
         $scope.placePredictions = resp.data;
       });      
     }
@@ -38,6 +36,7 @@ angular.module('WeatherCtrl',[])
 
      }
 
+    // When routing from pastSearches, there will already be a search, so we'll grab it
     var getPriorSearch = function(){
       if( WeatherSearchService.getSearch() ){
         var place = WeatherSearchService.getSearch();

@@ -1,6 +1,11 @@
 angular.module('RegisterCtrl', []).controller('registerController',
   ['$scope', '$location', 'AuthService',
   function ($scope, $location, AuthService) {
+
+    $scope.switchForms = function () {
+          $location.path('/login');
+        }
+
     $scope.register = function () {
 
       // initial values
@@ -22,20 +27,11 @@ angular.module('RegisterCtrl', []).controller('registerController',
         })
         // handle error
         .catch(function () {
-          console.log('are we here???')
           $scope.error = true;
           $scope.errorMessage = "That username is taken! Please enter a different one";
           $scope.disabled = false;
           $scope.registerForm = {};
         })
-        // .then(function(){
-        // })
-        // .then(function () {
-        //   $location.path('/');
-        //   $scope.disabled = false;
-        //   $scope.loginForm = {};
-        // })
-
     };
 
 }]);
