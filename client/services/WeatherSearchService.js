@@ -9,9 +9,19 @@ angular.module('WeatherSearchService',[])
       getPlaceData: getPlaceData,
       getPastSearches: getPastSearches,
       getSearch: getSearch,
-      setSearch: setSearch
+      setSearch: setSearch,
+      addDaysOfWeek: addDaysOfWeek
     });
 
+    function addDaysOfWeek( weatherForecastArr ) {
+      //get the current day
+      var day = new Date().getDay();
+      var daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      for(var i = 0; i < weatherForecastArr.length; i++){
+       weatherForecastArr[i].day = daysOfWeek[ ( i+day+1 ) % 7 ];
+      }
+      return weatherForecastArr;
+    }
 
     function getSearch() {
       return search;

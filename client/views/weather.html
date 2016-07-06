@@ -4,7 +4,7 @@
   <h1>Search a place to see the weather:</h1>
 
     <div class='autocomplete'>
-      <input type="text" my-enter="getWeatherData()" class="search" ng-model="place" ng-change="searchPlace(place)" placeholder="Search for a place">
+      <input type="text" my-enter="getWeatherData()" class="search" ng-model="placeEntry" ng-change="searchPlace(placeEntry)" placeholder="Search for a place">
           <div class='search' ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
               <li class="hoverme suggestionBox">
                 {{place.terms[0].value}}
