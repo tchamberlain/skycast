@@ -132,6 +132,35 @@ router.post('/weather/currently', function(req, res) {
   }
 });
 
+router.post('/weather/history', function(req, res) {
+  // record this search in the user's search history
+  addToSearchHistory(req.user._id, req.body.place);
+
+  // get lat and lng from google places, then use to call the  forecastApi
+  places.details({reference: req.body.place.reference}, callForecastApi);
+  
+  function callForecastApi(err, response){
+    if(err){
+      return res.status(500).json({
+        err: err
+      }); 
+    }
+    var lat = response.result.geometry.location.lat;
+    var lng = response.result.geometry.location.lng;
+    var time = 'test';
+    var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
+    request(url, function (error, response, body) {
+      if(err){
+        return res.status(500).json({
+          err: err
+        }); 
+      }
+      var forecastData = JSON.parse(body);
+      res.json(forecastData);
+    });
+  }
+});
+
 
 // HELPERS
 
