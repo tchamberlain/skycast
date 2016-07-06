@@ -1,23 +1,41 @@
- <div class='whiteContainer'> 
-  <h1>Weather!</h1>
+ <div class='whiteContainer container'> 
+  <div class=' container'> 
 
-    <input type="text"   class="search" ng-model="place" ng-change="searchPlace(place)" placeholder="Search for a place">
-      <ul>
-        <ul ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
-            <div class="media-details">
-              {{place.terms[0].value}}
-            </div>
-        </ul>
-      </ul>
+  <h1>Search a place to see the weather:</h1>
 
-      <h2>Current Weather</h2>
-     <div>  {{weatherCurrently}} </div>
+    <div class='autocomplete'>
+      <input type="text" my-enter="getWeatherData()" class="search" ng-model="place" ng-change="searchPlace(place)" placeholder="Search for a place">
+          <div class='search' ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
+              <li class="hoverme suggestionBox">
+                {{place.terms[0].value}}
+              </li>
+        </div>
+      </div>
+      <h2>Current Weather Conditions</h2>
+      <skycon icon="weatherCurrently.icon" size="100"></skycon>
+      <ul> <span class='label large label-default'>summary</span> {{weatherCurrently.summary}} </ul>
+      <ul> <span class='label label-default'>Probability of Precipitation:</span> {{weatherCurrently.precipProbability}} %</ul>
+      <ul> <span class='label label-default'>Temperature:</span> {{weatherCurrently.temperature}} °F</ul>
+      <ul> <span class='label label-default'>Feels Like:</span> {{weatherCurrently.apparentTemperature}} °F</u>
+
      <h2>This Week's Forecast</h2>
-     <div> {{weatherForecast}} </div>
+     
+     <div class="row scroll">
+        <div ng-repeat="weather in weatherForecast" class='col'>
+          <weather-block weather ="weather" ></weather-block >
+        </div>
+      </div>
+
      <h2>Weather History</h2>
      <div> {{weatherHistory}} </div>
   <div>
 
+
+
+
 <div ng-controller="logoutController">
   <a ng-click='logout()' class="btn btn-default">Logout</a>
+</div>
+
+
 </div>

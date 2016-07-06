@@ -1,3 +1,5 @@
-<div class="col-md-4">
-PAST SEARCHES !
+<div class='whiteContainer'> 
+    <div ng-repeat="search in pastSearches" class='col' ng-click='viewSearch(search)'>
+      <div>{{search}}</div>
+    </div>
 </div>

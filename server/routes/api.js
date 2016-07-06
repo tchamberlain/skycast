@@ -6,7 +6,8 @@ var request = require('request');
 var darkskyKey = require("../config").darkskyKey;
 var GooglePlaces = require('google-places');
 var places = new GooglePlaces(require("../config").googlePlacesKey);
-
+var Q = require('q');
+var findUser = Q.nbind(User.findOne, User);
 
 router.post('/user/register', function(req, res) {
   User.register(new User({ username: req.body.username }),
@@ -18,7 +19,8 @@ router.post('/user/register', function(req, res) {
     }
     passport.authenticate('local')(req, res, function () {
       return res.status(200).json({
-        status: 'Registration successful!'
+        status: 'Registration successful!',
+
       });
     });
   });
@@ -54,6 +56,20 @@ router.get('/user/logout', function(req, res) {
   });
 });
 
+router.get('/user/pastSearches', function(req, res) {
+    User.findOne({_id: req.user._id })
+    .then(function (user) {
+      if (user) {
+        res.json({
+          username: user.username,
+          pastSearches: user.pastSearches
+        });
+      } else {
+        console.error('Error finding users');
+      }
+    });
+});
+
 router.get('/user/status', function(req, res) {
   if (!req.isAuthenticated()) {
     return res.status(200).json({
@@ -74,28 +90,11 @@ router.post('/placeData', function(req, res) {
      });
     } 
     return res.json( response.predictions );
-
-    // for(var i=0; i < response.predictions.length; i++){
-    //   console.log('value3',response.predictions[i].terms[0].value);
-    // }    
-    
-    // var success = function(err, response) {
-    //   var lat = response.result.geometry.location.lat;
-    //   var lng = response.result.geometry.location.lng;
-    //   console.log("lat,lng ",lat,lng);
-    // };
-    function success(err, response) {
-      console.log('NAME:',response.result.name);
-    };
-    for(var index in response.predictions) {
-      places.details({reference: response.predictions[index].reference}, success);
-    }
   });
 });
 
 
 router.post('/weather/currently', function(req, res) {
-  
   places.details({reference: req.body.place.reference}, callForecastApi);
   
   function callForecastApi(err, response){
@@ -104,6 +103,10 @@ router.post('/weather/currently', function(req, res) {
         err: err
       }); 
     }
+
+    // record this search in the user's search history
+    addToSearchHistory(req.user._id, response.result.name);
+
     var lat = response.result.geometry.location.lat;
     var lng = response.result.geometry.location.lng;
     var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
@@ -119,6 +122,16 @@ router.post('/weather/currently', function(req, res) {
   }
 });
 
-
+var addToSearchHistory = function( id, placeName ){
+  User.findOne({_id: id })
+    .then(function(user) {
+      user.pastSearches.push(placeName);
+      user.save(function(err) {
+        if (err) {
+          console.error(err);
+        } 
+      });
+    });
+}
 
 module.exports = router;
