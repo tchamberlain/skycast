@@ -8,7 +8,6 @@ var User = new Schema({
   username: String,
   password: String,
   pastSearches: []
-
 });
 
 User.plugin(passportLocalMongoose);

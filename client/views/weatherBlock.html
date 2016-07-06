@@ -1,6 +1,5 @@
-<ul> <h3>{{weather.day}}</h3></ul>
-<skycon icon="weather.icon" size="100"></skycon>
-<ul> <span class='label large label-default'>summary</span> {{weather.summary}} </ul>
-<ul> <span class='label label-default'>Probability of Precipitation:</span> {{weather.precipProbability}} %</ul>
-<ul> <span class='label label-default'>Minimum Temperature:</span> {{weather.temperatureMin}} °F</ul>
-<ul> <span class='label label-default'>Maximum Temperature:</span> {{weather.temperatureMax}} °F</ul>
+<ul><h3>{{weather.day}}</h3></ul>
+<ul><skycon icon="weather.icon" size="50"></skycon></ul>
+<ul><div class='summaryText'>{{weather.summary}}</div> </ul>
+<ul> <span class='label label-default'>High of:</span> {{weather.temperatureMin}} °F</ul>
+<ul> <span class='label label-default'>Low of:</span> {{weather.temperatureMax}} °F</ul>

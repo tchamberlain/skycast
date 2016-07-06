@@ -1,5 +1,7 @@
 var myApp = angular.module('myApp',[
   'ngRoute',
+  'LoginCtrl',
+  'RegisterCtrl',
   'WeatherCtrl',
   'PastSearchesCtrl',
   'WeatherSearchService',
@@ -16,6 +18,11 @@ myApp.config(function ($routeProvider) {
     .when('/login', {
       templateUrl: 'views/login.html',
       controller: 'loginController',
+      access: {restricted: false}
+    })
+    .when('/register', {
+      templateUrl: 'views/register.html',
+      controller: 'registerController',
       access: {restricted: false}
     })
     .when('/logout', {
@@ -70,3 +77,27 @@ myApp.directive('weatherBlock', function() {
         templateUrl: './views/weatherBlock.html',
     }
 });
+
+myApp
+    .directive('loading',   ['$http' ,function ($http)
+    {
+        return {
+            restrict: 'A',
+            link: function (scope, elm, attrs)
+            {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+
+                scope.$watch(scope.isLoading, function (v)
+                {
+                    if(v){
+                        elm.show();
+                    }else{
+                        elm.hide();
+                    }
+                });
+            }
+        };
+
+    }]);

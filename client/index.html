@@ -6,7 +6,9 @@
   <title>SkyCast</title>
   <!-- STYLES -->
   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-  <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css" rel="stylesheet">
+  <!-- bootstrap compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/bootstrap.min.css">
   <link href="./styles/styles.css" rel="stylesheet">
 
 </head>
@@ -16,11 +18,14 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <img src="http://megaicons.net/static/img/icons_sizes/8/178/256/weather-partly-cloudy-day-icon.png" style="width:55px;height:48px;">
-          <a class="navbar-brand" href="#">SkyCast</a>
+          <a class="navbar-brand" href="#/">SkyCast</a>
         </div>
         <ul class="nav navbar-nav">
-          <li id="navItem"><a href="#/">Search the Weather</a></li>
-          <li id="navItem"><a href="#/pastSearches">Past Searches</a></li> 
+          <li><a id="navItem" href="#/">Search the Weather</a></li>
+          <li><a id="navItem" href="#/pastSearches">Past Searches</a></li> 
+          <li ng-controller="logoutController">
+            <a id="navItem" href="#/login" ng-click='logout()'>Logout </a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -37,12 +42,14 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
   <script src="/bower_components/angular-skycons/angular-skycons.min.js"></script>
-
+  <!-- bootstrap compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
   <script src="./main.js"></script>
   <script src="./services/AuthService.js"></script>
   <script src="./services/WeatherSearchService.js"></script>
   <script src="./controllers/LoginCtrl.js"></script>
+  <script src="./controllers/RegisterCtrl.js"></script>
   <script src="./controllers/PastSearchesCtrl.js"></script>
   <script src="./controllers/WeatherCtrl.js"></script>
 

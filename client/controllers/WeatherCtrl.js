@@ -1,16 +1,19 @@
 angular.module('WeatherCtrl',[])
 .controller('weatherController',['$scope','WeatherSearchService','$timeout',
-  function ($scope, WeatherSearchService, $timeout, $q, $log) {
-    
+  function ( $scope, WeatherSearchService, $timeout, $q ) {
+   
+    // When routing from pastSearches, there will already be a search
     $scope.searchPlace = function( placeEntry ){
       // use service to generate google places autocomplete predictions
       WeatherSearchService.getPlaceData( placeEntry )
       .then(function(resp){
+        console.log(resp.data);
         $scope.placePredictions = resp.data;
       });      
     }
 
-     $scope.getWeatherData = function( place ){
+
+    $scope.getWeatherData = function( place ){
       // if someone presses enter rather than clicking on an option
       if( place === undefined ){
         if($scope.placePredictions.length > 0){
@@ -20,10 +23,10 @@ angular.module('WeatherCtrl',[])
         }
       }
       //set the placeEntry as the prediction just clicked on
-      $scope.placeEntry = place.terms[0].value;
+      $scope.placeEntry = place.name;
 
       // get the weather information for this week
-      WeatherSearchService.getWeatherCurrently(place)
+      WeatherSearchService.getWeatherCurrently( place )
       .then(function(resp){
         $scope.weatherCurrently = resp.data.currently;
         // add the day of the week onto each forecast object
@@ -34,6 +37,17 @@ angular.module('WeatherCtrl',[])
       $scope.placePredictions = [];
 
      }
+
+    var getPriorSearch = function(){
+      if( WeatherSearchService.getSearch() ){
+        var place = WeatherSearchService.getSearch();
+         $scope.getWeatherData( place );
+        // reset search to null
+        WeatherSearchService.setSearch( null )
+      }
+    }
+
+    getPriorSearch();
 
 
 }]);

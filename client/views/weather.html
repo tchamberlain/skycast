@@ -1,41 +1,40 @@
- <div class='whiteContainer container'> 
-  <div class=' container'> 
+ <div class='container-fluid'> 
 
-  <h1>Search a place to see the weather:</h1>
-
-    <div class='autocomplete'>
-      <input type="text" my-enter="getWeatherData()" class="search" ng-model="placeEntry" ng-change="searchPlace(placeEntry)" placeholder="Search for a place">
-          <div class='search' ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
-              <li class="hoverme suggestionBox">
-                {{place.terms[0].value}}
-              </li>
-        </div>
+    <div class='whiteContainer autoCompleteContainer'>
+      <h2>Search a place to see the weather:</h2>
+        <div class='autocomplete'>
+          <input type="text" my-enter="getWeatherData()" class="search" ng-model="placeEntry" ng-change="searchPlace(placeEntry)" placeholder="Search for a place">
+              <div class='search' ng-repeat="place in placePredictions" ng-click="getWeatherData(place)">
+                  <li class="hoverme suggestionBox">
+                    {{place.name}}
+                  </li>
+              </div>
+          </div>
+          <div class="loading-spiner-holder" data-loading ><div class="loading-spiner"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" /></div></div>
       </div>
-      <h2>Current Weather Conditions</h2>
-      <skycon icon="weatherCurrently.icon" size="100"></skycon>
-      <ul> <span class='label large label-default'>summary</span> {{weatherCurrently.summary}} </ul>
-      <ul> <span class='label label-default'>Probability of Precipitation:</span> {{weatherCurrently.precipProbability}} %</ul>
-      <ul> <span class='label label-default'>Temperature:</span> {{weatherCurrently.temperature}} °F</ul>
-      <ul> <span class='label label-default'>Feels Like:</span> {{weatherCurrently.apparentTemperature}} °F</u>
-
-     <h2>This Week's Forecast</h2>
-     
-     <div class="row scroll">
-        <div ng-repeat="weather in weatherForecast" class='col'>
-          <weather-block weather ="weather" ></weather-block >
-        </div>
+      
+      <div ng-show='weatherCurrently' class='whiteContainer'>
+      <h2>Current conditions for {{placeEntry}}</h2>
+        <ul><skycon icon="weatherCurrently.icon" size="100"></skycon></ul>
+        <ul><div class='summaryText'>{{weatherCurrently.summary}}</div> </ul>
+        <ul> <span class='label label-default'>Probability of Precipitation:</span> {{weatherCurrently.precipProbability}} %</ul>
+        <ul> <span class='label label-default'>Temperature:</span> {{weatherCurrently.temperature}} °F</ul>
+        <ul> <span class='label label-default'>Feels Like:</span> {{weatherCurrently.apparentTemperature}} °F</u>
       </div>
 
-     <h2>Weather History</h2>
-     <div> {{weatherHistory}} </div>
-  <div>
+       <ul ng-show='weatherForecast' class="list-inline whiteContainer scroll row">
 
+         <h2>This Week's Forecast</h2>
+           <div ng-repeat="weather in weatherForecast">
+             <div><weather-block weather ="weather" class='col-md-2 forecastBlocks'></weather-block ></div>
+           </div>
+         </div>
+        </ul>
 
-
-
-<div ng-controller="logoutController">
-  <a ng-click='logout()' class="btn btn-default">Logout</a>
-</div>
-
+       <div ng-show='weatherHistory' class='whiteContainer'>
+         <h2>Weather History</h2>
+         <div> {{weatherHistory}} </div>
+      </div>
+  </div>
 
 </div>

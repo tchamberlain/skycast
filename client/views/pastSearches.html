@@ -1,5 +1,6 @@
-<div class='whiteContainer'> 
+<div class='whiteContainer searchContainer'> 
+    <h2>{{username}}'s weather searches</h2>
     <div ng-repeat="search in pastSearches" class='col' ng-click='viewSearch(search)'>
-      <div>{{search}}</div>
+    <h1>> <a class="label label-primary"> {{search.name}}</a></h1>
     </div>
 </div>
