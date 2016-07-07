@@ -30,14 +30,17 @@
         </ul>
 
        <div ng-show='weatherHistory' class='whiteContainer'>
-         <h2>Weather History</h2>
-         <div class="col-lg-6 col-sm-12" id="line-chart" >
+          <label class="checkbox-inline"><h2>Weather This Time in 2015 </h2></label>
+         <div  id="line-chart" >
            <div class="panel panel-default">
              <div class="panel-heading">
-               Temperature This Week In 2015
+               <div class= 'text-center'><h3>Temperature In 2015</h3></div>
              </div>
              <div class="panel-body">
-               <canvas id="line" class="chart chart-line" data="chartData" labels="labels" legend="true" click="onClick" series="series"></canvas>
+               <canvas id="line" class="chart chart-line" data="chartData" labels="labels" legend="true" series="series"></canvas>
+                 <div><label><input type="radio" name="optradio" checked >View 2015 Weather</label></div>
+                 <div><label><input type="radio" name="optradio" checked >View 2014 Weather</label></div>
+                 <div><label><input type="radio" name="optradio" checked >View 2013 Weather</label></div>
              </div>
            </div>
          </div>

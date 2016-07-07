@@ -70,20 +70,16 @@ angular.module('WeatherCtrl',[])
          lowTempArr,
          highTempArr
        ];
-       $scope.onClick = function (points, evt) {
-         console.log(points, evt);
-       };
-
     }
 
     var convertTimeStamp = function( timestamp ){
-      date = new Date(timestamp * 1000),
-      datevalues = [
-         date.getMonth()+1,
-         date.getDate(),
-         date.getFullYear(),
+      var date = new Date(timestamp * 1000);
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+      var datevalues = [
+         months[date.getMonth()],
+         date.getDate()
       ];
-      return datevalues.join('/');
+      return datevalues.join('-');
     }
 
     getPriorSearch();
