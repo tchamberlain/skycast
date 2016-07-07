@@ -6,7 +6,8 @@ var myApp = angular.module('myApp',[
   'PastSearchesCtrl',
   'WeatherSearchService',
   'AuthService',
-  'angular-skycons'
+  'angular-skycons',
+  'chart.js'
   ]);
 
 myApp.config(function ($routeProvider) {

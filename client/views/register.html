@@ -18,6 +18,16 @@
   <div class = 'text-center'>
     <button class="btn btn-primary" ng-click='switchForms()'>Already have an account?</button>
   </div>
-  <bars-chart chart-data="40,100,80,15,25,60,10" ></bars-chart>
 </div>
 
+  <div class="col-lg-6 col-sm-12" id="line-chart" >
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Chart
+      </div>
+
+      <div class="panel-body">
+        <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" click="onClick" series="series"></canvas>
+      </div>
+    </div>
+  </div>
