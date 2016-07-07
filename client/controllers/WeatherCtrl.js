@@ -2,6 +2,9 @@ angular.module('WeatherCtrl',[])
 .controller('weatherController',['$scope','WeatherSearchService','$timeout',
   function ( $scope, WeatherSearchService, $timeout, $q ) {
    
+    // test add map 
+     $scope.imgurl = constructImageUrl();
+
     $scope.searchPlace = function( placeEntry ){
       // use service to generate google places autocomplete predictions
       WeatherSearchService.getPlaceData( placeEntry )
@@ -26,6 +29,7 @@ angular.module('WeatherCtrl',[])
       // get the weather information for this week
       WeatherSearchService.getWeatherCurrently( place )
       .then(function(resp){
+        console.log('lat??',resp.data);
         $scope.weatherCurrently = resp.data.currently;
         // add the day of the week onto each forecast object
         $scope.weatherForecast = WeatherSearchService.addDaysOfWeek( resp.data.daily.data );
@@ -33,7 +37,6 @@ angular.module('WeatherCtrl',[])
 
       WeatherSearchService.getWeatherHistory( place )
       .then(function(resp){
-        console.log(resp.data)
         setUpHistoryChart(resp.data);
         $scope.weatherHistory = resp;
       });
@@ -82,6 +85,23 @@ angular.module('WeatherCtrl',[])
       return datevalues.join('-');
     }
 
+
+    function constructImageUrl(lat,lng){
+        var urlbase = "https://maps.googleapis.com/maps/api/staticmap?center=37.7749295, -122.4194155&zoom=13&size=400x400&markers=color:blue%7Clabel:S";
+        // 37.7749295, lng: -122.4194155
+        var markers = ["11211","11206","11222"];
+     
+        var imgurl = urlbase;
+        for(var i in markers){
+            imgurl += "%7C" + markers[i];
+        }
+        
+        return imgurl;
+    }
+
     getPriorSearch();
 
 }]);
+
+
+

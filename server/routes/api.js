@@ -89,7 +89,7 @@ router.post('/placeData', function(req, res) {
        err: err
      });
     } 
-    // returning only what we names and references of places
+    // returning only names and references of places
     placeData = [];
     for( var i = 0; i < response.predictions.length; i++ ){
       placeData.push({ 
@@ -162,7 +162,6 @@ var getLatAndLng = function( place ){
   return d.promise;  
 }
 
-
 var arrContainsObject = function( arr, obj ){
   for(var i = 0; i < arr.length; i++){
     if( JSON.stringify(arr[i]) === JSON.stringify( obj) ){
@@ -199,16 +198,15 @@ var addYears = function(years){
   return dat;
 }
 
-// geneate an array of 7 dates around the current day
+// geneate an array of dates around the current day
 // but a  year in the past
 var generateDateArr = function(){
   var dates = [];
   var aYearAgo = addYears(-1);
-  for(var i = 0; i < 7; i ++ ){
+  for(var i = 0; i < 30; i ++ ){
     var newDate = addDays( i, aYearAgo );
     // put it in iso format, as that is what the forecast api takes
     dates.push( newDate.toISOString().split('.')[0] );
-    console.log('test', newDate )
   }
   return dates;
 }
