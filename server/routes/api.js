@@ -3,9 +3,10 @@ var router = express.Router();
 var passport = require('passport');
 var User = require('../models/user.js');
 var request = require('request');
-var darkskyKey = require("../config").darkskyKey;
+var darkskyKey = process.env.darkskyKey || require("../config").darkskyKey;
+var googlePlacesKey = process.env.googlePlacesKey || require("../config").googlePlacesKey;
 var GooglePlaces = require('google-places');
-var places = new GooglePlaces(require("../config").googlePlacesKey);
+var places = new GooglePlaces( googlePlacesKey );
 var Q = require('q');
 var findUser = Q.nbind(User.findOne, User);
 
