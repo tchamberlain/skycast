@@ -31,6 +31,11 @@ angular.module('WeatherCtrl',[])
         $scope.weatherForecast = WeatherSearchService.addDaysOfWeek( resp.data.daily.data );
       });
 
+      WeatherSearchService.getWeatherHistory( place )
+      .then(function(resp){
+        $scope.weatherHistory = resp.data.daily;
+      });
+
       //set this predictions back to empty
       $scope.placePredictions = [];
 

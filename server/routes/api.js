@@ -105,65 +105,96 @@ router.post('/placeData', function(req, res) {
 });
 
 
+
+// router.post('/weather/currently', function(req, res) {
+//   // record this search in the user's search history
+//   addToSearchHistory(req.user._id, req.body.place);
+
+//   // get lat and lng from google places, then use to call the  forecastApi
+//   places.details({reference: req.body.place.reference}, callForecastApi);
+  
+//   function callForecastApi(err, response){
+//     if(err){
+//       return res.status(500).json({
+//         err: err
+//       }); 
+//     }
+//     var lat = response.result.geometry.location.lat;
+//     var lng = response.result.geometry.location.lng;
+//     var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
+//     request(url, function (error, response, body) {
+//       if(err){
+//         return res.status(500).json({
+//           err: err
+//         }); 
+//       }
+//       var forecastData = JSON.parse(body);
+//       res.json(forecastData);
+//     });
+//   }
+// });
+
+
 router.post('/weather/currently', function(req, res) {
   // record this search in the user's search history
   addToSearchHistory(req.user._id, req.body.place);
-
-  // get lat and lng from google places, then use to call the  forecastApi
-  places.details({reference: req.body.place.reference}, callForecastApi);
-  
-  function callForecastApi(err, response){
-    if(err){
-      return res.status(500).json({
-        err: err
-      }); 
-    }
-    var lat = response.result.geometry.location.lat;
-    var lng = response.result.geometry.location.lng;
-    var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
-    request(url, function (error, response, body) {
-      if(err){
-        return res.status(500).json({
-          err: err
-        }); 
-      }
-      var forecastData = JSON.parse(body);
-      res.json(forecastData);
-    });
-  }
+  getLatAndLng(req.body.place)
+  .then(function(result){
+    return callForecastApi(result.lat, result.lng);
+   })
+   .then(function(result){
+    console.log('hello???????????????')
+    var forecastData = JSON.parse(result);
+    res.json(forecastData);
+  });
 });
 
 router.post('/weather/history', function(req, res) {
-  // record this search in the user's search history
-  addToSearchHistory(req.user._id, req.body.place);
-
   // get lat and lng from google places, then use to call the  forecastApi
-  places.details({reference: req.body.place.reference}, callForecastApi);
+  getLatAndLng(req.body.place)
+  .then(function(result){
+    var date = '2013-05-06T12:00:00-0400';
+    return callForecastApi(result.lat, result.lng, date);
+   })
+   .then(function(result){
+    var forecastData = JSON.parse(result);
+    res.json(forecastData);
+  });
   
-  function callForecastApi(err, response){
-    if(err){
-      return res.status(500).json({
-        err: err
-      }); 
-    }
-    var lat = response.result.geometry.location.lat;
-    var lng = response.result.geometry.location.lng;
-    var time = 'test';
-    var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
-    request(url, function (error, response, body) {
-      if(err){
-        return res.status(500).json({
-          err: err
-        }); 
-      }
-      var forecastData = JSON.parse(body);
-      res.json(forecastData);
-    });
-  }
 });
 
 
+
+
 // HELPERS
+
+// need to pass it an lat and lng, and an optional param date
+var callForecastApi = function( lat, lng, date ){
+  var dateParam = '';
+  if( date !== undefined ){
+    dateParam = ',' + date;
+  }
+  var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng + dateParam;
+  var d = Q.defer();
+  request(url, function (err, response, body) {
+    if(err !== null) return d.reject(err); 
+    d.resolve(body);
+  });
+  return d.promise;  
+}
+
+
+// need to pass it a place with a property reference
+var getLatAndLng = function( place ){
+  var d = Q.defer();
+  places.details({reference: place.reference},function(err,data){
+        if(err !== null) return d.reject(err); 
+            var latLng = {};
+            d.resolve({lat: data.result.geometry.location.lat, lng: data.result.geometry.location.lng  });
+   });
+  return d.promise;  
+}
+
 
 var arrContainsObject = function( arr, obj ){
   for(var i = 0; i < arr.length; i++){
@@ -189,5 +220,30 @@ var addToSearchHistory = function( id, place ){
     });
 }
 
+var addDays = function(days, origDate){
+  var dat = new Date(origDate.valueOf());
+  dat.setDate(dat.getDate() + days);
+  return dat;
+}
+
+var addYears = function(years){
+  var dat = new Date();
+  dat.setFullYear(dat.getUTCFullYear()+years);
+  return dat;
+}
+
+// geneate an array of 7 dates around the current day
+// but a  year in the past
+var generateDateArr = function(){
+  var dates = [];
+  var aYearAgo = addYears(-1);
+  for(var i = 0; i < 7; i ++ ){
+    var newDate = addDays( i, aYearAgo );
+    // put it in iso format, as that is what the forecast api takes
+    dates.push( newDate.toISOString().split('.')[0] );
+    console.log('test', newDate )
+  }
+  return dates;
+}
 
 module.exports = router;

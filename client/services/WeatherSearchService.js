@@ -6,6 +6,7 @@ angular.module('WeatherSearchService',[])
 
     return ({
       getWeatherCurrently: getWeatherCurrently,
+      getWeatherHistory: getWeatherHistory,
       getPlaceData: getPlaceData,
       getPastSearches: getPastSearches,
       getSearch: getSearch,
