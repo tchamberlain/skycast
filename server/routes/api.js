@@ -84,13 +84,11 @@ router.get('/user/status', function(req, res) {
 
 router.post('/placeData', function(req, res) {
   places.autocomplete({ input: req.body.place }, function(err, response) {
-    
     if( err ){
      return res.status(500).json({
        err: err
      });
     } 
-    
     // returning only what we names and references of places
     placeData = [];
     for( var i = 0; i < response.predictions.length; i++ ){
@@ -99,41 +97,9 @@ router.post('/placeData', function(req, res) {
         reference:  response.predictions[i].reference
       });
     }
-
     return res.json( placeData );
   });
 });
-
-
-
-// router.post('/weather/currently', function(req, res) {
-//   // record this search in the user's search history
-//   addToSearchHistory(req.user._id, req.body.place);
-
-//   // get lat and lng from google places, then use to call the  forecastApi
-//   places.details({reference: req.body.place.reference}, callForecastApi);
-  
-//   function callForecastApi(err, response){
-//     if(err){
-//       return res.status(500).json({
-//         err: err
-//       }); 
-//     }
-//     var lat = response.result.geometry.location.lat;
-//     var lng = response.result.geometry.location.lng;
-//     var url = 'https://api.forecast.io/forecast/' + darkskyKey + '/' + lat + ',' + lng;
-//     request(url, function (error, response, body) {
-//       if(err){
-//         return res.status(500).json({
-//           err: err
-//         }); 
-//       }
-//       var forecastData = JSON.parse(body);
-//       res.json(forecastData);
-//     });
-//   }
-// });
-
 
 router.post('/weather/currently', function(req, res) {
   // record this search in the user's search history
@@ -143,7 +109,6 @@ router.post('/weather/currently', function(req, res) {
     return callForecastApi(result.lat, result.lng);
    })
    .then(function(result){
-    console.log('hello???????????????')
     var forecastData = JSON.parse(result);
     res.json(forecastData);
   });
@@ -166,7 +131,7 @@ router.post('/weather/history', function(req, res) {
 
 
 
-// HELPERS
+// ------- HELPERS -----------
 
 // need to pass it an lat and lng, and an optional param date
 var callForecastApi = function( lat, lng, date ){
@@ -182,7 +147,6 @@ var callForecastApi = function( lat, lng, date ){
   });
   return d.promise;  
 }
-
 
 // need to pass it a place with a property reference
 var getLatAndLng = function( place ){
