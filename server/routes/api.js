@@ -167,7 +167,8 @@ var addToSearchHistory = function( id, place ){
   User.findOne({_id: id })
     .then(function(user) {
       // Using concat so that search history appears with most recent first
-      [ place ].concat( user.pastSearches );
+      var newPlace = [place]
+      user.pastSearches = newPlace.concat( user.pastSearches );
       user.save(function(err) {
         if (err) {
           console.error(err);
