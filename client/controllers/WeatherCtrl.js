@@ -11,7 +11,7 @@ angular.module('WeatherCtrl',[])
     }
 
     $scope.getWeatherData = function( place ){
-      // clearing our current data
+      // clearing any current data for a new search
       $scope.weatherCurrently = null;
       $scope.weatherForecast = null;
       $scope.weatherHistory = null;

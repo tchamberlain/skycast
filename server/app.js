@@ -10,7 +10,7 @@ var passport = require('passport');
 var localStrategy = require('passport-local' ).Strategy;
 
 // user schema/model
-var User = require('./models/user.js');
+var User = require('./user/userModel.js');
 
 // create instance of express
 var app = express();

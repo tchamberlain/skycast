@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var User = require('../models/user.js');
+var User = require('../user/userModel.js');
 var request = require('request');
 var darkskyKey = process.env.darkskyKey || require("../config").darkskyKey;
 var googlePlacesKey = process.env.googlePlacesKey || require("../config").googlePlacesKey;
