@@ -1,6 +1,7 @@
 module.exports = {
     
-   darkskyKey   : "YOURKEY",
-  googlePlacesKey   : "YOURKEY"
+  darkskyKey   : "YOURKEY",
+  googlePlacesKey   : "YOURKEY",
+  localMongoURI: 'YOURKEY'
 
  }

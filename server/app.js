@@ -4,14 +4,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressSession = require('express-session');
-var mongoose = require('mongoose');
 var hash = require('bcrypt-nodejs');
 var path = require('path');
 var passport = require('passport');
 var localStrategy = require('passport-local' ).Strategy;
-
-// mongoose
-mongoose.connect('mongodb://localhost/mean-auth');
 
 // user schema/model
 var User = require('./models/user.js');
