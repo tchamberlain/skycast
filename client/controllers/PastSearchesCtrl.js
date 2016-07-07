@@ -4,7 +4,8 @@ angular.module('PastSearchesCtrl',[])
 
    $scope.pastSearches = [];
    $scope.routeToSearch = routeToSearch;
-   getPastSearches();
+    
+    getPastSearches();
     
     function getPastSearches(){
     WeatherSearchService.getPastSearches()
@@ -17,7 +18,7 @@ angular.module('PastSearchesCtrl',[])
         }
       });      
     }
-
+    
     function routeToSearch( search ){
       WeatherSearchService.setSearch( search );
       $location.path('/');
