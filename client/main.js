@@ -5,6 +5,7 @@ var myApp = angular.module('myApp',[
   'WeatherCtrl',
   'PastSearchesCtrl',
   'WeatherSearchService',
+  'AuthService',
   'angular-skycons'
   ]);
 
