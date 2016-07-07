@@ -1,6 +1,7 @@
 var myApp = angular.module('myApp',[
   'ngRoute',
   'LoginCtrl',
+  'LogoutCtrl',
   'RegisterCtrl',
   'WeatherCtrl',
   'PastSearchesCtrl',
