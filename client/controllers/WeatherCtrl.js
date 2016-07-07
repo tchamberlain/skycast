@@ -33,7 +33,8 @@ angular.module('WeatherCtrl',[])
 
       WeatherSearchService.getWeatherHistory( place )
       .then(function(resp){
-        $scope.weatherHistory = resp.data.daily;
+        console.log( resp.data);
+        $scope.weatherHistory = resp.data[0];
       });
 
       //set this predictions back to empty

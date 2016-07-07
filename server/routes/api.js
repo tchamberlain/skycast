@@ -115,20 +115,23 @@ router.post('/weather/currently', function(req, res) {
 });
 
 router.post('/weather/history', function(req, res) {
+  var promises = [];
+
   // get lat and lng from google places, then use to call the  forecastApi
   getLatAndLng(req.body.place)
   .then(function(result){
-    var date = '2013-05-06T12:00:00-0400';
-    return callForecastApi(result.lat, result.lng, date);
-   })
-   .then(function(result){
-    var forecastData = JSON.parse(result);
-    res.json(forecastData);
-  });
-  
+    var dates = generateDateArr();
+    dates.forEach(function(date){
+      var promise = callForecastApi(result.lat, result.lng, date).then(function(data){
+        return Q( JSON.parse(data).daily.data[0] );
+      });
+      promises.push(promise);
+    });
+    Q.all(promises).then(function(data){
+      res.json(data);
+    });
+   });
 });
-
-
 
 
 // ------- HELPERS -----------
