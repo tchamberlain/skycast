@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp',[
+angular.module('myApp',[
   'ngRoute',
   'LoginCtrl',
   'LogoutCtrl',
@@ -7,11 +7,13 @@ var myApp = angular.module('myApp',[
   'PastSearchesCtrl',
   'WeatherSearchService',
   'AuthService',
+  'LoadingDir',
+  'EnterKeyDir',
+  'WeatherBlockDir',
   'angular-skycons',
   'chart.js'
-  ]);
-
-myApp.config(function ($routeProvider) {
+  ])
+.config(function ($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'views/weather.html',
@@ -41,9 +43,8 @@ myApp.config(function ($routeProvider) {
       redirectTo: '/',
       access: {restricted: true}
     });
-});
-
-myApp.run(function ($rootScope, $location, $route, AuthService) {
+})
+.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
     function (event, next, current) {
       AuthService.getUserStatus()
@@ -55,77 +56,3 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
       });
   });
 });
-
-myApp.directive('myEnter', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if(event.which === 13) {
-                scope.$apply(function (){
-                    scope.$eval(attrs.myEnter);
-                });
-
-                event.preventDefault();
-            }
-        });
-    };
-});
-
-
-myApp.directive('weatherBlock', function() {
-     return {
-      restrict:'E',
-      scope: {
-         weather: '=weather'
-      },
-        templateUrl: './views/weatherBlock.html',
-    }
-});
-
-myApp
-    .directive('loading',   ['$http' ,function ($http)
-    {
-        return {
-            restrict: 'A',
-            link: function (scope, elm, attrs)
-            {
-                scope.isLoading = function () {
-                    return $http.pendingRequests.length > 0;
-                };
-
-                scope.$watch(scope.isLoading, function (v)
-                {
-                    if(v){
-                        elm.show();
-                    }else{
-                        elm.hide();
-                    }
-                });
-            }
-        };
-
-    }]);
-
-myApp
-    .directive('loading',   ['$http' ,function ($http)
-    {
-        return {
-            restrict: 'A',
-            link: function (scope, elm, attrs)
-            {
-                scope.isLoading = function () {
-                    return $http.pendingRequests.length > 0;
-                };
-
-                scope.$watch(scope.isLoading, function (v)
-                {
-                    if(v){
-                        elm.show();
-                    }else{
-                        elm.hide();
-                    }
-                });
-            }
-        };
-
-    }]);
-

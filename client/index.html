@@ -2,6 +2,7 @@
 <html ng-app="myApp">
 
 <head>
+
   <meta charset="utf-8">
   <title>SkyCast</title>
   
@@ -14,16 +15,20 @@
 
 </head>
 <body>
-   <div class= 'navContainer'>
+   <div class='navContainer'>
     <nav class="navbar navbar-light bg-faded ">
       <div class="container-fluid">
         <div class="navbar-header">
           <img src="http://megaicons.net/static/img/icons_sizes/8/178/256/weather-partly-cloudy-day-icon.png" style="width:55px;height:48px;">
           <a class="navbar-brand" href="#/">SkyCast</a>
         </div>
-        <ul class="nav navbar-nav" ng-controller="loginController" ng-show ='isLoggedIn()'>
-          <li ng-controller="loginController" ng-show ='isLoggedIn()'><a id="navItem" href="#/">Search the Weather</a></li>
-          <li ng-controller="loginController" ng-show='isLoggedIn()'><a id="navItem" href="#/pastSearches">Past Searches</a></li> 
+        <ul class="nav navbar-nav" ng-controller="logoutController" ng-show ='isLoggedIn()'>
+          <li ng-controller="logoutController" ng-show ='isLoggedIn()'>
+            <a id="navItem" href="#/">Search the Weather</a>
+          </li>
+          <li ng-controller="logoutController" ng-show='isLoggedIn()'>
+            <a id="navItem" href="#/pastSearches">Past Searches</a>
+          </li> 
           <li ng-controller="logoutController">
             <a id="navItem" href="#/login" ng-click='logout()'>Logout </a>
           </li>
@@ -32,7 +37,7 @@
     </nav>
   </div>
 
-  <div  ng-view></div>
+  <div ng-view></div>
 
   <!-- SCRIPTS -->
   <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
@@ -53,6 +58,9 @@
   <script src="./controllers/RegisterCtrl.js"></script>
   <script src="./controllers/PastSearchesCtrl.js"></script>
   <script src="./controllers/WeatherCtrl.js"></script>
+  <script src="./directives/LoadingDir.js"></script>
+  <script src="./directives/WeatherBlockDir.js"></script>
+  <script src="./directives/EnterKeyDir.js"></script>
 
 </body>
 </html>

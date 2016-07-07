@@ -3,22 +3,24 @@ angular.module('PastSearchesCtrl',[])
   function ( $scope, WeatherSearchService, $location, $q ) {
 
    $scope.pastSearches = [];
-    var getPastSearches = function(){
-      WeatherSearchService.getPastSearches()
+   $scope.routeToSearch = routeToSearch;
+   getPastSearches();
+    
+    function getPastSearches(){
+    WeatherSearchService.getPastSearches()
       .then(function(resp){
         $scope.pastSearches = resp.data.pastSearches;
+        $scope.username = resp.data.username;
+        // If the user has no searches, display a message 
         if( $scope.pastSearches.length === 0 ){
           $scope.noSearches = true;
         }
-        $scope.username = resp.data.username;
       });      
     }
-    $scope.viewSearch = function( search ){
+
+    function routeToSearch( search ){
       WeatherSearchService.setSearch( search );
       $location.path('/');
     }
-
-   getPastSearches();
-
 
 }]);

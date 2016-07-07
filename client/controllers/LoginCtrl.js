@@ -7,10 +7,6 @@ angular.module('LoginCtrl',[]).controller('loginController',
       $location.path('/register');
     }
 
-    $scope.isLoggedIn = function () {
-      return AuthService.isLoggedIn();
-    }
-
     $scope.login = function () {
       // initial values
       $scope.error = false;
