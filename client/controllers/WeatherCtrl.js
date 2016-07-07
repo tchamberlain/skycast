@@ -2,16 +2,6 @@ angular.module('WeatherCtrl',[])
 .controller('weatherController',['$scope','WeatherSearchService','$timeout',
   function ( $scope, WeatherSearchService, $timeout, $q ) {
    
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-     $scope.series = ['High Temp', 'Low Temp'];
-     $scope.data = [
-       [65, 59, 80, 81, 56, 55, 40],
-       [28, 48, 40, 19, 86, 27, 90]
-     ];
-     $scope.onClick = function (points, evt) {
-       console.log(points, evt);
-     };
-
     $scope.searchPlace = function( placeEntry ){
       // use service to generate google places autocomplete predictions
       WeatherSearchService.getPlaceData( placeEntry )
@@ -43,8 +33,9 @@ angular.module('WeatherCtrl',[])
 
       WeatherSearchService.getWeatherHistory( place )
       .then(function(resp){
-        console.log( resp.data);
-        $scope.weatherHistory = resp.data[0];
+        console.log(resp.data)
+        setUpHistoryChart(resp.data);
+        $scope.weatherHistory = resp;
       });
 
       //set this predictions back to empty
@@ -62,7 +53,39 @@ angular.module('WeatherCtrl',[])
       }
     }
 
-    getPriorSearch();
+    var setUpHistoryChart = function( data ){
+       var highTempArr = data.map(function( date ) {
+                  return date.temperatureMax;
+        });
+       var lowTempArr = data.map(function( date ) {
+                  return date.temperatureMin;
+        });
+       var datesArr = data.map(function( date ) {
+                  return convertTimeStamp(date.time);
+        });
 
+      $scope.labels = datesArr;
+      $scope.series = ['High Temp', 'Low Temp'];
+       $scope.chartData = [
+         lowTempArr,
+         highTempArr
+       ];
+       $scope.onClick = function (points, evt) {
+         console.log(points, evt);
+       };
+
+    }
+
+    var convertTimeStamp = function( timestamp ){
+      date = new Date(timestamp * 1000),
+      datevalues = [
+         date.getMonth()+1,
+         date.getDate(),
+         date.getFullYear(),
+      ];
+      return datevalues.join('/');
+    }
+
+    getPriorSearch();
 
 }]);
