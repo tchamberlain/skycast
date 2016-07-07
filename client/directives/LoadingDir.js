@@ -6,6 +6,7 @@ angular.module('LoadingDir',[])
         link: function (scope, elm, attrs)
         {
             scope.isLoading = function () {
+                console.log( 'which requests?', $http.pendingRequests );
                 return $http.pendingRequests.length > 0;
             };
 

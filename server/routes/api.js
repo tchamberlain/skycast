@@ -127,6 +127,7 @@ router.post('/weather/history', function(req, res) {
       });
       promises.push(promise);
     });
+
     Q.all(promises).then(function(data){
       res.json(data);
     });
@@ -162,27 +163,16 @@ var getLatAndLng = function( place ){
   return d.promise;  
 }
 
-var arrContainsObject = function( arr, obj ){
-  for(var i = 0; i < arr.length; i++){
-    if( JSON.stringify(arr[i]) === JSON.stringify( obj) ){
-      return true;
-    }
-  }
-  return false;
-}
-
 var addToSearchHistory = function( id, place ){
   User.findOne({_id: id })
     .then(function(user) {
-      // Check to make sure this is a new search before saving it
-      if( arrContainsObject( user.pastSearches, place ) === false ){
-        user.pastSearches.push( place );
-        user.save(function(err) {
-          if (err) {
-            console.error(err);
-          } 
-        });
-      }
+      // Using concat so that search history appears with most recent first
+      [ place ].concat( user.pastSearches );
+      user.save(function(err) {
+        if (err) {
+          console.error(err);
+        } 
+      });
     });
 }
 

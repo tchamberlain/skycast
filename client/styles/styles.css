@@ -7,6 +7,11 @@ h2{
   color:  #008cba;
 }
 
+.map {
+  margin-top: 2vh;
+  border-radius: 15px;
+}
+
 .whiteContainer{
   width: 100%;
   background-color:white;
@@ -148,8 +153,7 @@ nav {
   background: #666;
   color: #fff;
 }
-
-/*TESTING CHART CSS*/
+/* Chat CSS */
 .chart {
     background: #eee;
     padding: 3px;

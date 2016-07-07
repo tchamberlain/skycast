@@ -1,10 +1,7 @@
 angular.module('WeatherCtrl',[])
 .controller('weatherController',['$scope','WeatherSearchService','$timeout',
   function ( $scope, WeatherSearchService, $timeout, $q ) {
-   
-    // test add map 
-     $scope.imgurl = constructImageUrl();
-
+    
     $scope.searchPlace = function( placeEntry ){
       // use service to generate google places autocomplete predictions
       WeatherSearchService.getPlaceData( placeEntry )
@@ -13,8 +10,14 @@ angular.module('WeatherCtrl',[])
       });      
     }
 
-
     $scope.getWeatherData = function( place ){
+      // clearing our current data
+      $scope.weatherCurrently = null;
+      $scope.weatherForecast = null;
+      $scope.weatherHistory = null;
+      $scope.weatherMapUrl = null;
+
+
       // if someone presses enter rather than clicking on an option
       if( place === undefined ){
         if($scope.placePredictions.length > 0){
@@ -29,7 +32,8 @@ angular.module('WeatherCtrl',[])
       // get the weather information for this week
       WeatherSearchService.getWeatherCurrently( place )
       .then(function(resp){
-        console.log('lat??',resp.data);
+        // make the map
+        $scope.mapUrl = constructMapUrl( resp.data.latitude, resp.data.longitude );
         $scope.weatherCurrently = resp.data.currently;
         // add the day of the week onto each forecast object
         $scope.weatherForecast = WeatherSearchService.addDaysOfWeek( resp.data.daily.data );
@@ -86,17 +90,10 @@ angular.module('WeatherCtrl',[])
     }
 
 
-    function constructImageUrl(lat,lng){
-        var urlbase = "https://maps.googleapis.com/maps/api/staticmap?center=37.7749295, -122.4194155&zoom=13&size=400x400&markers=color:blue%7Clabel:S";
-        // 37.7749295, lng: -122.4194155
-        var markers = ["11211","11206","11222"];
-     
-        var imgurl = urlbase;
-        for(var i in markers){
-            imgurl += "%7C" + markers[i];
-        }
-        
-        return imgurl;
+    function constructMapUrl(lat,lng){
+      var urlbase = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=8&size=400x400&markers=color:blue%7Clabel:S";     
+      var mapUrl = urlbase + "&markers=color:red%7Clabel:*%7C"+lat+","+lng;
+      return mapUrl;
     }
 
     getPriorSearch();
