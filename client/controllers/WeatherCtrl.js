@@ -2,7 +2,21 @@ angular.module('WeatherCtrl',[])
 .controller('weatherController',['$scope','SearchService','$timeout',
   function ( $scope, SearchService, $timeout, $q ) {
     
-    $scope.searchPlace = function( placeEntry ){
+    $scope.searchPlace = searchPlace;
+    $scope.getWeatherData = getWeatherData;
+
+    getPriorSearch();
+
+    // When routing from pastSearches, there will already be a search, so we'll grab it
+    function getPriorSearch(){
+      if( SearchService.getSearch() ){
+         $scope.getWeatherData( SearchService.getSearch() );
+        // reset search to null
+        SearchService.setSearch( null )
+      }
+    }
+
+    function searchPlace( placeEntry ){
       // clearing any current data for a new search
       $scope.weatherCurrently = null;
       $scope.weatherForecast = null;
@@ -16,7 +30,7 @@ angular.module('WeatherCtrl',[])
       });      
     }
 
-    $scope.getWeatherData = function( place ){
+    function getWeatherData( place ){
       // if someone presses enter rather than clicking on an option
       if( place === undefined ){
         if($scope.placePredictions.length > 0){
@@ -51,35 +65,22 @@ angular.module('WeatherCtrl',[])
 
      }
 
-    // When routing from pastSearches, there will already be a search, so we'll grab it
-    var getPriorSearch = function(){
-      if( SearchService.getSearch() ){
-         $scope.getWeatherData( SearchService.getSearch() );
-        // reset search to null
-        SearchService.setSearch( null )
-      }
-    }
-
-    var setUpHistoryChart = function( data ){
+    function setUpHistoryChart( data ){
       var highTempArr = data.map(function( date ) {
                 return date.temperatureMax;
       });
       var lowTempArr = data.map(function( date ) {
                 return date.temperatureMin;
       });
-
       //get the dates in a human-readable format
       var datesArr = data.map(function( date ) {
                 return SearchService.convertTimeStamp(date.time);
       });
-
       $scope.chartData = [ lowTempArr, highTempArr ];
       $scope.labels = datesArr;
-
       $scope.series = ['High Temp', 'Low Temp'];
     }
 
-    getPriorSearch();
 
 }]);
 
