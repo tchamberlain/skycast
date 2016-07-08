@@ -1,5 +1,6 @@
  <div class='container-fluid'> 
     
+    <!-- search -->
     <div class='whiteContainer autoCompleteContainer'>
       <h2>Search a place to see the weather:</h2>
         <div class='autocomplete'>
@@ -10,14 +11,16 @@
                   </li>
               </div>
           </div>
+          <div class="loading-spiner-holder" data-loading ><div class="loading-spiner"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" /></div></div>
       </div>
-      
+
+      <!-- weatherCurrently -->
       <div ng-show='weatherCurrently'class='whiteContainer text-center'>
         <h2>Current conditions for: <a class="label label-primary"> {{placeEntry}}</a></h2>
         <div class='col-md-6'>
           <ul><skycon icon="weatherCurrently.icon" size="200"></skycon></ul>
           <ul><div class='summaryText'>{{weatherCurrently.summary}}</div> </ul>
-          <ul> <div class='label label-default'>Probability of Precipitation:</div> {{weatherCurrently.precipProbability}} %</ul>
+          <ul> <div class='label label-default'>Probability of Precipitation:</div>{{weatherCurrently.precipProbability}} %</ul>
           <ul> <div class='label label-default'>Temperature:</div> {{weatherCurrently.temperature}} °F</ul>
           <ul> <div class='label label-default'>Feels Like:</div> {{weatherCurrently.apparentTemperature}} °F</ul>
         </div>
@@ -26,16 +29,17 @@
         </div>
       </div>
 
-       <ul ng-show='weatherForecast' class="whiteContainer">
-         <h2>This Week's Forecast</h2>
-           <div class="list-inline" ng-repeat="weather in weatherForecast">
-             <weather-block weather="weather" class='col-md-3 forecastBlocks'></weather-block>
-           </div>
-        </ul>
+    <!-- weatherForecast -->
+      <div ng-show='weatherForecast' class="whiteContainer">
+       <h2>This Week's Forecast</h2>
+         <div class="list-inline" ng-repeat="weather in weatherForecast">
+           <weather-block weather="weather" class='col-md-3 forecastBlocks'></weather-block>
+         </div>
+      </div>
 
+      <!-- weatherHistory -->
       <div ng-show='weatherHistory' class='whiteContainer'>
-        <label class="checkbox-inline"><h2>Weather This Time, Last Year</h2></label>
-        <div class="loading-spiner-holder" data-loading ><div class="loading-spiner"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" /></div></div>
+        <label class="checkbox-inline"><h2>Weather on This Date, Last Year</h2></label>
         <div  id="line-chart" >
            <div class="panel panel-default">
              <div class="panel-heading">

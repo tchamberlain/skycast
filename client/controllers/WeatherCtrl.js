@@ -31,56 +31,45 @@ angular.module('WeatherCtrl',[])
     }
 
     function getWeatherData( place ){
-      // if someone presses enter rather than clicking on an option
-      if( place === undefined ){
-        if($scope.placePredictions.length > 0){
-          place =  $scope.placePredictions[0];
-        } else {
-          $scope.placePredictions[0] = 'No results found. Please try another search.';
-        }
-      } 
-
       //set this predictions back to empty
       $scope.placePredictions = [];
 
       //set the placeEntry as the prediction just clicked on
       $scope.placeEntry = place.name;
 
+      setUpCurrentWeather(place);
+      setUpWeatherHistory(place);
+
+     }
+
+    function setUpCurrentWeather( place ){
       // get the weather information for this week
       SearchService.getWeatherCurrently( place )
       .then(function(resp){
-        console.log(resp);
         // make the map
         $scope.mapUrl = SearchService.constructMapUrl( resp.data.latitude, resp.data.longitude, resp.data.key );
         $scope.weatherCurrently = resp.data.currently;
         // add the day of the week onto each forecast object
         $scope.weatherForecast = SearchService.addDaysOfWeek( resp.data.daily.data );
       });
+    }
 
+    function setUpWeatherHistory( place ){
       SearchService.getWeatherHistory( place )
       .then(function(resp){
         setUpHistoryChart(resp.data);
         $scope.weatherHistory = resp;
       });
-
-     }
+    }
 
     function setUpHistoryChart( data ){
-      var highTempArr = data.map(function( date ) {
-                return date.temperatureMax;
-      });
-      var lowTempArr = data.map(function( date ) {
-                return date.temperatureMin;
-      });
-      //get the dates in a human-readable format
-      var datesArr = data.map(function( date ) {
-                return SearchService.convertTimeStamp(date.time);
-      });
+      var highTempArr = data.map(function( date ) {return date.temperatureMax; });
+      var lowTempArr = data.map(function( date ) { return date.temperatureMin; });
+      var datesArr = data.map(function( date ) {return SearchService.convertTimeStamp(date.time);});
       $scope.chartData = [ lowTempArr, highTempArr ];
       $scope.labels = datesArr;
       $scope.series = ['High Temp', 'Low Temp'];
     }
-
 
 }]);
 

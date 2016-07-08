@@ -8,7 +8,6 @@ angular.module('myApp',[
   'SearchService',
   'AuthService',
   'LoadingDir',
-  'EnterKeyDir',
   'WeatherBlockDir',
   'angular-skycons',
   'chart.js'
