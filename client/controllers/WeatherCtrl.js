@@ -35,8 +35,9 @@ angular.module('WeatherCtrl',[])
       // get the weather information for this week
       SearchService.getWeatherCurrently( place )
       .then(function(resp){
+        console.log(resp);
         // make the map
-        $scope.mapUrl = SearchService.constructMapUrl( resp.data.latitude, resp.data.longitude );
+        $scope.mapUrl = SearchService.constructMapUrl( resp.data.latitude, resp.data.longitude, resp.data.key );
         $scope.weatherCurrently = resp.data.currently;
         // add the day of the week onto each forecast object
         $scope.weatherForecast = SearchService.addDaysOfWeek( resp.data.daily.data );
@@ -71,7 +72,7 @@ angular.module('WeatherCtrl',[])
       var datesArr = data.map(function( date ) {
                 return SearchService.convertTimeStamp(date.time);
       });
-      
+
       $scope.chartData = [ lowTempArr, highTempArr ];
       $scope.labels = datesArr;
 

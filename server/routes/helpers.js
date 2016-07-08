@@ -37,6 +37,7 @@ module.exports = {
      })
      .then(function(result){
       var forecastData = JSON.parse(result);
+      forecastData.key = googlePlacesKey;
       res.json(forecastData);
     });
   },
@@ -82,8 +83,7 @@ function getLatAndLng ( place ){
   var d = Q.defer();
   places.details({reference: place.reference},function(err,data){
         if(err !== null) return d.reject(err); 
-            var latLng = {};
-            d.resolve({lat: data.result.geometry.location.lat, lng: data.result.geometry.location.lng  });
+            d.resolve({lat: data.result.geometry.location.lat, lng: data.result.geometry.location.lng });
    });
   return d.promise;  
 }

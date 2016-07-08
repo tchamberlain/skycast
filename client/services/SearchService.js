@@ -64,9 +64,9 @@ function SearchServiceFunc ($http) {
     });
   }
 
-  function constructMapUrl(lat,lng){
+  function constructMapUrl( lat,lng, key ){
     var urlbase = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=8&size=400x400&markers=color:blue%7Clabel:S";     
-    var mapUrl = urlbase + "&markers=color:red%7Clabel:*%7C"+lat+","+lng;
+    var mapUrl = urlbase + "&markers=color:red%7Clabel:*%7C"+lat+","+lng + '&key='+key;
     return mapUrl;
   }
 
