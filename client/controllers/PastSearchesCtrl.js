@@ -1,6 +1,6 @@
 angular.module('PastSearchesCtrl',[])
-.controller('pastSearchesController',['$scope','WeatherSearchService','$location',
-  function ( $scope, WeatherSearchService, $location, $q ) {
+.controller('pastSearchesController',['$scope','SearchService','$location',
+  function ( $scope, SearchService, $location, $q ) {
 
    $scope.pastSearches = [];
    $scope.routeToSearch = routeToSearch;
@@ -8,7 +8,7 @@ angular.module('PastSearchesCtrl',[])
     getPastSearches();
     
     function getPastSearches(){
-    WeatherSearchService.getPastSearches()
+    SearchService.getPastSearches()
       .then(function(resp){
         $scope.pastSearches = resp.data.pastSearches;
         $scope.username = resp.data.username;
@@ -20,7 +20,7 @@ angular.module('PastSearchesCtrl',[])
     }
     
     function routeToSearch( search ){
-      WeatherSearchService.setSearch( search );
+      SearchService.setSearch( search );
       $location.path('/');
     }
 

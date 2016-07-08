@@ -3,7 +3,7 @@ angular.module('WeatherBlockDir',[])
      return {
       restrict:'E',
       scope: {
-         weather: '=weather'
+         weather: '=weather',
       },
         templateUrl: './views/weatherBlock.html',
     }

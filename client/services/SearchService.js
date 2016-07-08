@@ -1,7 +1,7 @@
-angular.module('WeatherSearchService',[])
-.factory('WeatherSearchService',['$http', WeatherSearchServiceFunc ]);
+angular.module('SearchService',[])
+.factory('SearchService',['$http', SearchServiceFunc ]);
 
-function WeatherSearchServiceFunc ($http) {
+function SearchServiceFunc ($http) {
   var search = null;
 
   return ({
@@ -11,7 +11,9 @@ function WeatherSearchServiceFunc ($http) {
     getPastSearches: getPastSearches,
     getSearch: getSearch,
     setSearch: setSearch,
-    addDaysOfWeek: addDaysOfWeek
+    addDaysOfWeek: addDaysOfWeek,
+    constructMapUrl: constructMapUrl,
+    convertTimeStamp: convertTimeStamp
   });
 
   function getSearch() {
@@ -60,6 +62,22 @@ function WeatherSearchServiceFunc ($http) {
     .error(function (data) {
      console.error(data);
     });
+  }
+
+  function constructMapUrl(lat,lng){
+    var urlbase = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=8&size=400x400&markers=color:blue%7Clabel:S";     
+    var mapUrl = urlbase + "&markers=color:red%7Clabel:*%7C"+lat+","+lng;
+    return mapUrl;
+  }
+
+  function convertTimeStamp( timestamp ){
+    var date = new Date(timestamp * 1000);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    var datevalues = [
+       months[date.getMonth()],
+       date.getDate()
+    ];
+    return datevalues.join('-');
   }
 
 }

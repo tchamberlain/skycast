@@ -52,11 +52,6 @@ h2{
   background-color:#E2E2E2;
 }
 
-.centerElement {
-  text-align: center;
-   display:inline-block;
-}
-
 .center {
     margin: auto;
     width: 90%;

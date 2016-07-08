@@ -5,7 +5,7 @@ angular.module('myApp',[
   'RegisterCtrl',
   'WeatherCtrl',
   'PastSearchesCtrl',
-  'WeatherSearchService',
+  'SearchService',
   'AuthService',
   'LoadingDir',
   'EnterKeyDir',
